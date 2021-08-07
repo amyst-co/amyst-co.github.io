@@ -1,4 +1,16 @@
+
 $(function() {
+
+	function getFormData($form){
+		var unindexed_array = $form.serializeArray();
+		var indexed_array = {};
+	
+		$.map(unindexed_array, function(n, i){
+			indexed_array[n['name']] = n['value'];
+		});
+	
+		return indexed_array;
+	}
 
 	// Get the form.
 	var form = $('#contact-form');
@@ -12,11 +24,13 @@ $(function() {
 		e.preventDefault();
 
 		// Serialize the form data.
-		var formData = $(form).serialize();
+		var formData = getFormData(form);
+		console.log('submitting', formData);
 
 		// Submit the form using AJAX.
 		$.ajax({
-			type: 'POST',
+			type: 'GET',
+			dataType: "json",
 			url: $(form).attr('action'),
 			data: formData
 		})
@@ -26,7 +40,7 @@ $(function() {
 			$(formMessages).addClass('success');
 
 			// Set the message text.
-			$(formMessages).text(response);
+			$(formMessages).text("Gotcha! We'll get in touch with you soon.");
 
 			// Clear the form.
 			$('#contact-form input,#contact-form textarea').val('');
