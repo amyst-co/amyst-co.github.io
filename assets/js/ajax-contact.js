@@ -25,7 +25,6 @@ $(function() {
 
 		// Serialize the form data.
 		var formData = getFormData(form);
-		console.log('submitting', formData);
 
 		// Submit the form using AJAX.
 		$.ajax({
